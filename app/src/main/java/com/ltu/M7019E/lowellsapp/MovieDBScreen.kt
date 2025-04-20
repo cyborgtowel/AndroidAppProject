@@ -29,11 +29,13 @@ import com.ltu.M7019E.lowellsapp.database.Movies
 import com.ltu.M7019E.lowellsapp.ui.theme.screens.MovieDetailScreen
 import com.ltu.M7019E.lowellsapp.viewmodel.MovieDBViewModel
 import com.ltu.M7019E.lowellsapp.ui.theme.screens.MovieListScreen
+import com.ltu.M7019E.lowellsapp.ui.theme.screens.ThirdScreen
 
 
 enum class MovieDBScreen (@StringRes val title: Int){
     List(title = R.string.app_name),
-    Detail(title = R.string.movie_Detail)
+    Detail(title = R.string.movie_Detail),
+    ThirdScreen(title = R.string.third_screen)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -110,10 +112,18 @@ fun TheMovieDBApp(
                 uiState.selectedMovie?. let { movie ->
                     MovieDetailScreen(
                         movie = movie,
-                        modifier = Modifier
+                        modifier = Modifier,
+                        onNavigateToThirdScreen = {
+                            navController.navigate(MovieDBScreen.ThirdScreen.name)
+                        }
                     )
                 }
 
+            }
+            composable(route = MovieDBScreen.ThirdScreen.name){
+                ThirdScreen(
+                    onBack = { navController.popBackStack() }
+                )
             }
         }
     }
